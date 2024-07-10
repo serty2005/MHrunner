@@ -5,3 +5,5 @@ __pycache__/
 mhrunner/coreapp/__pycache__/*
 mhrunner/coreapp/migrations/__pycache__/*
 mhrunner/mhrunner/__pycache__/*
+mhrunner/coreapp/management/commands/__pycache__/*
+/mhrunner/db.sqlite3
