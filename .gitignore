@@ -1,4 +1,4 @@
 /.env
 /.venv
 /TODO
-*/__pycache__
+__pycache__/
