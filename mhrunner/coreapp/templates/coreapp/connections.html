@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Connections</title>
+    <script>
+        function connectTeamviewer(teamviewerId) {
+            var password = document.getElementById("password-" + teamviewerId).value;
+            var url = "clearbat://teamviewer@" + teamviewerId + ":" + password;
+            window.location.href = url;
+        }
+
+        function connectAnydesk(anydeskId) {
+            var password = document.getElementById("password-" + anydeskId).value;
+            var url = "clearbat://anydesk@" + anydeskId + ":" + password;
+            window.location.href = url;
+        }
+    </script>
+</head>
+<body>
+    <h1>Connections</h1>
+    {% for owner in owners %}
+        <div class="owner-block">
+            <h2>{{ owner.ownerTitle }}</h2>
+            <ul>
+                {% for server in owner.servers %}
+                    <li>
+                        DeviceName: {{ server.DeviceName }}<br>
+                        <a href="https://myhoreca.itsm365.com/sd/operator/#uuid:{{ server.UUID }}" target="_blank">Link to SD</a><br>
+                        UniqueID: {{ server.UniqueID }}<br>
+                        IP: {{ server.IP }}<br>
+                        <a href="{{ server.CabinetLink }}" target="_blank">Partners</a><br>
+                        {% if server.Teamviewer %} Teamviewer: <form onsubmit="connectTeamviewer('{{ server.Teamviewer }}'); return false;">
+                            <input type="password" id="password-{{ server.Teamviewer }}" placeholder="Enter password">
+                            <button type="submit">Go</button></form><br>{% endif %}
+                        {% if server.AnyDesk %}AnyDesk: <form onsubmit="connectAnydesk('{{ server.AnyDesk }}'); return false;">
+                            <input type="password" id="password-{{ server.AnyDesk }}" placeholder="Enter password">
+                            <button type="submit">Go</button></form><br>{% endif %}
+                    </li>
+                {% endfor %}
+                {% for workstation in owner.workstations %}
+                    <li>
+                        DeviceName: {{ workstation.DeviceName }}
+                        <a href="https://myhoreca.itsm365.com/sd/operator/#uuid:{{ workstation.UUID }}" target="_blank">Link to SD</a><br>
+                        GK: {{ workstation.GK }}<br>
+                        {% if workstation.Teamviewer %}Teamviewer: <form onsubmit="connectTeamviewer('{{ workstation.Teamviewer }}'); return false;">
+                            <input type="password" id="password-{{ workstation.Teamviewer }}" placeholder="Enter password">
+                            <button type="submit">Go</button></form><br>{% endif %}
+                            {% if workstation.AnyDesk %}AnyDesk: <form onsubmit="connectAnydesk('{{ workstation.AnyDesk }}'); return false;">
+                                <input type="password" id="password-{{ workstation.AnyDesk }}" placeholder="Enter password">
+                                <button type="submit">Go</button></form><br>{% endif %}
+                        lastModifiedDate: {{ workstation.lastModifiedDate }}<br>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+</body>
+</html>
