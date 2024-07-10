@@ -1,4 +1,7 @@
 /.env
 /.venv
 /TODO
-/__pycache__/
+__pycache__/
+mhrunner/coreapp/__pycache__/*
+mhrunner/coreapp/migrations/__pycache__/*
+mhrunner/mhrunner/__pycache__/*
