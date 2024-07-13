@@ -13,6 +13,12 @@ class Server(models.Model):
     ownerTitle = models.CharField(max_length=255, null=True, blank=True)
     cleared_ip = models.CharField(max_length=255, null=True, blank=True)
 
+    def __str__(self):
+        if self.ownerTitle is not None:
+            return self.ownerTitle + ' - ' + self.DeviceName
+        else:
+            return self.DeviceName
+
 class Workstation(models.Model):
     UUID = models.CharField(max_length=255, primary_key=True)
     GK = models.CharField(max_length=255, null=True, blank=True)
@@ -23,3 +29,8 @@ class Workstation(models.Model):
     ownerTitle = models.CharField(max_length=255, null=True, blank=True)
     ownerUUID = models.CharField(max_length=255, null=True, blank=True)
     
+    def __str__(self):
+        if self.ownerTitle is not None:
+            return self.ownerTitle + ' - ' + self.DeviceName
+        else:
+            return self.DeviceName

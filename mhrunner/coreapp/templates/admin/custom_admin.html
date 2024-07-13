@@ -1,0 +1,10 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+    <h1>Update Data</h1>
+    <div>
+        <a href="{% url 'admin:update_servers' %}" class="button">Update Servers</a>
+        <a href="{% url 'admin:update_workstations' %}" class="button">Update Workstations</a>
+    </div>
+    {{ block.super }}
+{% endblock %}
