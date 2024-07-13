@@ -26,7 +26,7 @@
                 {% for server in owner.servers %}
                     <li>
                         DeviceName: {{ server.DeviceName }}<br>
-                        <a href="https://myhoreca.itsm365.com/sd/operator/#uuid:{{ server.UUID }}" target="_blank">Link to SD</a><br>
+                        <a href="{{SD_URL}}/sd/operator/#uuid:{{ server.UUID }}" target="_blank">Link to SD</a><br>
                         UniqueID: {{ server.UniqueID }}<br>
                         IP: {{ server.IP }}<br>
                         <a href="{{ server.CabinetLink }}" target="_blank">Partners</a><br>
@@ -42,7 +42,7 @@
                 {% for workstation in owner.workstations %}
                     <li>
                         DeviceName: {{ workstation.DeviceName }}<br>
-                        <a href="https://myhoreca.itsm365.com/sd/operator/#uuid:{{ workstation.UUID }}" target="_blank">Link to SD</a><br>
+                        <a href="{{SD_URL}}/sd/operator/#uuid:{{ workstation.UUID }}" target="_blank">Link to SD</a><br>
                         GK: {{ workstation.GK }}<br>
                         {% if workstation.Teamviewer %} Teamviewer: {{ workstation.Teamviewer }}<br> <form onsubmit="connectTeamviewer('{{ workstation.Teamviewer }}'); return false;">
                             <input type="password" id="password-{{ workstation.Teamviewer }}" placeholder="Enter password">
