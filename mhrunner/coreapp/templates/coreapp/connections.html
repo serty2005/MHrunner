@@ -5,15 +5,27 @@
     <title>Connections</title>
     <script>
         function connectTeamviewer(teamviewerId) {
-            var password = document.getElementById("password-" + teamviewerId).value;
+            var passwordField = document.getElementById("password-teamviewer-" + teamviewerId);
+            var password = passwordField.value;
             var url = "clearbat://teamviewer@" + teamviewerId + ":" + password;
             window.location.href = url;
+            passwordField.value = ""; // Очистка поля ввода
         }
 
         function connectAnydesk(anydeskId) {
-            var password = document.getElementById("password-" + anydeskId).value;
+            var passwordField = document.getElementById("password-anydesk-" + anydeskId);
+            var password = passwordField.value;
             var url = "clearbat://anydesk@" + anydeskId + ":" + password;
             window.location.href = url;
+            passwordField.value = ""; // Очистка поля ввода
+        }
+
+        function connectIiko(ipId) {
+            var passwordField = document.getElementById("password-iiko-" + ipId);
+            var password = passwordField.value;
+            var url = "clearbat://iiko@" + ipId + ":443@MH:" + password;
+            window.location.href = url;
+            passwordField.value = ""; // Очистка поля ввода
         }
     </script>
 </head>
@@ -28,15 +40,37 @@
                         DeviceName: {{ server.DeviceName }}<br>
                         <a href="{{SD_URL}}/sd/operator/#uuid:{{ server.UUID }}" target="_blank">Link to SD</a><br>
                         UniqueID: {{ server.UniqueID }}<br>
-                        IP: {{ server.IP }}<br>
-                        <a href="{{ server.CabinetLink }}" target="_blank">Partners</a><br>
-                        {% if server.Teamviewer %} Teamviewer: <form onsubmit="connectTeamviewer('{{ server.Teamviewer }}'); return false;">
-                            <input type="password" id="password-{{ server.Teamviewer }}" placeholder="Enter password">
-                            <button type="submit">Go</button></form><br>{% endif %}
-                        {% if server.AnyDesk %}AnyDesk: <form onsubmit="connectAnydesk('{{ server.AnyDesk }}'); return false;">
-                            <input type="password" id="password-{{ server.AnyDesk }}" placeholder="Enter password">
-                            <button type="submit">Go</button></form><br>{% endif %}
+
+                        {% if server.cleared_ip %}
+                            BackOffice:
+                            <form onsubmit="connectIiko('{{ server.cleared_ip }}'); return false;">
+                                <input type="password" id="password-iiko-{{ server.cleared_ip }}" placeholder="Enter password">
+                                <button type="submit">Go</button>
+                            </form>
                             <br>
+                        {% else %}
+                            IP: {{ server.IP }}<br>
+                        {% endif %}
+
+                        <a href="{{ server.CabinetLink }}" target="_blank">Partners</a><br>
+
+                        {% if server.Teamviewer %}
+                            Teamviewer: {{ server.Teamviewer }}<br>
+                            <form onsubmit="connectTeamviewer('{{ server.Teamviewer }}'); return false;">
+                                <input type="password" id="password-teamviewer-{{ server.Teamviewer }}" placeholder="Enter password">
+                                <button type="submit">Go</button>
+                            </form>
+                            <br>
+                        {% endif %}
+
+                        {% if server.AnyDesk %}
+                            AnyDesk: {{ server.AnyDesk }}<br>
+                            <form onsubmit="connectAnydesk('{{ server.AnyDesk }}'); return false;">
+                                <input type="password" id="password-anydesk-{{ server.AnyDesk }}" placeholder="Enter password">
+                                <button type="submit">Go</button>
+                            </form>
+                            <br>
+                        {% endif %}
                     </li>
                 {% endfor %}
                 {% for workstation in owner.workstations %}
@@ -44,12 +78,25 @@
                         DeviceName: {{ workstation.DeviceName }}<br>
                         <a href="{{SD_URL}}/sd/operator/#uuid:{{ workstation.UUID }}" target="_blank">Link to SD</a><br>
                         GK: {{ workstation.GK }}<br>
-                        {% if workstation.Teamviewer %} Teamviewer: {{ workstation.Teamviewer }}<br> <form onsubmit="connectTeamviewer('{{ workstation.Teamviewer }}'); return false;">
-                            <input type="password" id="password-{{ workstation.Teamviewer }}" placeholder="Enter password">
-                            <button type="submit">Go</button></form><br>{% endif %}
-                            {% if workstation.AnyDesk %} AnyDesk: {{ workstation.Anydesk }}<br><form onsubmit="connectAnydesk('{{ workstation.AnyDesk }}'); return false;">
-                                <input type="password" id="password-{{ workstation.AnyDesk }}" placeholder="Enter password">
-                                <button type="submit">Go</button></form><br>{% endif %}
+                        
+                        {% if workstation.Teamviewer %}
+                            Teamviewer: {{ workstation.Teamviewer }}<br>
+                            <form onsubmit="connectTeamviewer('{{ workstation.Teamviewer }}'); return false;">
+                                <input type="password" id="password-teamviewer-{{ workstation.Teamviewer }}" placeholder="Enter password">
+                                <button type="submit">Go</button>
+                            </form>
+                            <br>
+                        {% endif %}
+
+                        {% if workstation.AnyDesk %}
+                            AnyDesk: {{ workstation.AnyDesk }}<br>
+                            <form onsubmit="connectAnydesk('{{ workstation.AnyDesk }}'); return false;">
+                                <input type="password" id="password-anydesk-{{ workstation.AnyDesk }}" placeholder="Enter password">
+                                <button type="submit">Go</button>
+                            </form>
+                            <br>
+                        {% endif %}
+                        
                         lastModifiedDate: {{ workstation.lastModifiedDate }}<br>
                     </li>
                 {% endfor %}

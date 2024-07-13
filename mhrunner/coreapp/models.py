@@ -11,6 +11,7 @@ class Server(models.Model):
     DeviceName = models.CharField(max_length=255, null=True, blank=True)
     ownerUUID = models.CharField(max_length=255, null=True, blank=True)
     ownerTitle = models.CharField(max_length=255, null=True, blank=True)
+    cleared_ip = models.CharField(max_length=255, null=True, blank=True)
 
 class Workstation(models.Model):
     UUID = models.CharField(max_length=255, primary_key=True)

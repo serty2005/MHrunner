@@ -30,6 +30,11 @@ def validate_data(item):
             cabinet_link = re.sub(r'https://partners\.iiko\.ru/(ru|en)/cabinet/clients\.html\?mode=showOne&id=', 'https://partners.iiko.ru/v2/ru/cabinet/client-area/index.html?clientId=', cabinet_link)
         item['CabinetLink'] = cabinet_link
     
+    ip = item.get('IP', '')
+    if ip and '.iiko.it' in ip:
+        match = re.search(r'https://(.*?\.iiko\.it)', ip)
+        if match:
+            item['cleared_ip'] = match.group(1)
 
     return item
 
@@ -57,7 +62,7 @@ def insert_data(data):
         server.DeviceName = item.get('DeviceName', None)
         server.ownerUUID = owner_uuid
         server.ownerTitle = owner_title
-        
+        server.cleared_ip = item.get('cleared_ip', None)
         
         # Сохраняем объект в базу данных
         server.save()
