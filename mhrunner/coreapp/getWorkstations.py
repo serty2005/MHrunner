@@ -2,14 +2,15 @@ import requests
 import os, re
 from datetime import datetime
 from dotenv import load_dotenv
-from coreapp.models import Workstation
+
 import django
 from django.utils.timezone import make_aware, get_current_timezone
 
 # Загрузка переменных окружения
 load_dotenv()
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mhrunner.settings')
-django.setup()
+
+from coreapp.models import Workstation
 
 # Функция для получения данных
 def fetch_data():

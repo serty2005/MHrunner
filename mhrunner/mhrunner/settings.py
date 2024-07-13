@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'coreapp',
+    'django_celery_beat',
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
@@ -129,3 +131,22 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
+
+from celery.schedules import crontab
+CELERY_BEAT_SCHEDULE = {
+    'update-servers-every-10-minutes': {
+        'task': 'coreapp.tasks.update_servers',
+        'schedule': crontab(minute='*/10'),
+    },
+    'update-workstations-every-10-minutes': {
+        'task': 'coreapp.tasks.update_workstations',
+        'schedule': crontab(minute='*/10'),
+    },
+}

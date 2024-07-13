@@ -2,13 +2,14 @@ import os, re
 import django
 from dotenv import load_dotenv
 import requests
-from coreapp.models import Server
 
 
 # Загрузка переменных окружения
 load_dotenv()
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mhrunner.settings')
-django.setup()
+
+from coreapp.models import Server
+
 
 # Функция для получения данных
 def fetch_data():
